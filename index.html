@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexander Wilson — Manufacturing IT & Controls Leader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,500&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  --ink:       #0e1214;
+  --ink-mid:   #2c3a44;
+  --ink-soft:  #5a6e7a;
+  --ink-faint: #96aab5;
+  --copper:    #c4581a;
+  --copper-lt: #e07040;
+  --copper-bg: #fef3ec;
+  --copper-bd: #f0c4a8;
+  --paper:     #fafaf8;
+  --white:     #ffffff;
+  --surface:   #f3f1ed;
+  --rule:      #e4e0da;
+  --nav-h:     64px;
+}
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Outfit', sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ─────────────────────────────────────────
+   STICKY NAV
+───────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  transition: background 0.35s, box-shadow 0.35s;
+}
+nav.scrolled {
+  background: rgba(14, 18, 20, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+}
+.nav-logo {
+  font-family: 'Fraunces', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.02em;
+}
+.nav-logo em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--copper-lt);
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0; right: 0;
+  height: 1px;
+  background: var(--copper-lt);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.nav-links a:hover { color: white; }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-cta {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink) !important;
+  background: var(--copper-lt);
+  padding: 8px 20px;
+  border-radius: 3px;
+  transition: background 0.2s, transform 0.2s !important;
+}
+.nav-cta:hover { background: var(--copper) !important; transform: translateY(-1px); }
+.nav-cta::after { display: none !important; }
+
+/* Hamburger for mobile */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  width: 24px; height: 2px;
+  background: white;
+  border-radius: 1px;
+  transition: all 0.3s;
+}
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 120px 80px 80px;
+}
+
+/* Animated gradient orbs */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+.orb-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(196,88,26,0.15) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  animation: orbFloat 12s ease-in-out infinite alternate;
+}
+.orb-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(196,88,26,0.08) 0%, transparent 70%);
+  bottom: -50px; left: 10%;
+  animation: orbFloat 16s ease-in-out infinite alternate-reverse;
+}
+@keyframes orbFloat {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(40px, 30px) scale(1.1); }
+}
+
+/* Grid lines */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  max-width: 900px;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--copper-lt);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: riseIn 0.8s ease 0.2s forwards;
+}
+.hero-eyebrow-line { width: 40px; height: 1px; background: var(--copper); }
+
+.hero-name {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: white;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: riseIn 0.9s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;
+}
+.hero-name .first {
+  display: block;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(255,255,255,0.35);
+  font-size: 0.6em;
+  letter-spacing: 0.01em;
+  margin-bottom: 6px;
+}
+.hero-name .last-accent { color: var(--copper-lt); }
+
+.hero-tagline {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.45);
+  max-width: 560px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: riseIn 0.8s ease 0.55s forwards;
+}
+.hero-tagline strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: riseIn 0.8s ease 0.7s forwards;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--copper-lt);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 4px;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+  background: var(--copper);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(196,88,26,0.4);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 14px 28px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: all 0.2s;
+}
+.btn-ghost:hover {
+  color: white;
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+}
+
+/* Hero stats row */
+.hero-stats {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  opacity: 0;
+  animation: fadeIn 1s ease 1s forwards;
+}
+.hs-cell {
+  padding: 24px 32px;
+  border-right: 1px solid rgba(255,255,255,0.07);
+  transition: background 0.2s;
+}
+.hs-cell:last-child { border-right: none; }
+.hs-cell:hover { background: rgba(255,255,255,0.03); }
+.hs-num {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--copper-lt);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.hs-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 110px; right: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeIn 1s ease 1.2s forwards;
+}
+.scroll-hint span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  writing-mode: vertical-rl;
+}
+.scroll-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.2; transform: scaleY(1); }
+  50% { opacity: 0.6; transform: scaleY(1.2); }
+}
+
+/* ─────────────────────────────────────────
+   SECTION BASE
+───────────────────────────────────────── */
+section { padding: 96px 80px; }
+section:nth-child(even) { background: var(--white); }
+section:nth-child(odd) { background: var(--paper); }
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 16px;
+}
+.section-label::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--copper);
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 56px;
+}
+.section-title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ink-soft);
+}
+
+/* ─────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ─────────────────────────────────────────
+   ABOUT / IMPACT
+───────────────────────────────────────── */
+#about .about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.about-text p {
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--ink-mid);
+  margin-bottom: 20px;
+}
+.about-text p:last-child { margin-bottom: 0; }
+.about-text strong { font-weight: 600; color: var(--ink); }
+
+.about-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cred-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 3px solid transparent;
+  border-radius: 6px;
+  transition: all 0.25s;
+  cursor: default;
+}
+.cred-item:hover {
+  border-left-color: var(--copper);
+  background: var(--copper-bg);
+  transform: translateX(4px);
+}
+.cred-icon {
+  font-size: 20px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.cred-info {}
+.cred-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.cred-sub {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  font-weight: 300;
+}
+
+/* ─────────────────────────────────────────
+   EXPERIENCE TIMELINE
+───────────────────────────────────────── */
+#experience .xp-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0 60px;
+}
+
+/* Left: Company list (tab nav) */
+.xp-nav {
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.xp-nav-item {
+  padding: 14px 18px;
+  border-radius: 6px;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.xp-nav-item:hover { background: var(--surface); }
+.xp-nav-item.active {
+  background: var(--copper-bg);
+  border-left-color: var(--copper);
+}
+.xp-nav-company {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.xp-nav-period {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: var(--ink-faint);
+}
+.xp-nav-item.active .xp-nav-company { color: var(--copper); }
+
+/* Right: Job detail panels */
+.xp-panels {}
+
+.xp-panel {
+  display: none;
+  animation: fadeSlide 0.4s ease forwards;
+}
+.xp-panel.active { display: block; }
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.xp-panel-role {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.xp-panel-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.xp-panel-co {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.xp-panel-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--copper);
+  background: var(--copper-bg);
+  border: 1px solid var(--copper-bd);
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+.sep-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--rule);
+  flex-shrink: 0;
+}
+
+.xp-panel-points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.xp-panel-points li {
+  display: grid;
+  grid-template-columns: 8px 1fr;
+  gap: 14px;
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--ink-mid);
+}
+.xp-panel-points li::before {
+  content: '';
+  width: 8px; height: 1px;
+  background: var(--copper);
+  margin-top: 14px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+.xp-panel-points li b { font-weight: 600; color: var(--ink); }
+
+.xp-panel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.xp-tag {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 4px 12px;
+  border-radius: 20px;
+  transition: all 0.15s;
+}
+.xp-tag:hover { background: var(--ink); color: white; border-color: var(--ink); }
+
+/* ─────────────────────────────────────────
+   SKILLS SECTION
+───────────────────────────────────────── */
+#skills .skills-intro {
+  max-width: 600px;
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--ink-mid);
+  margin-bottom: 56px;
+}
+
+.skills-domains {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.domain-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 28px 26px;
+  transition: all 0.28s cubic-bezier(0.16,1,0.3,1);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+.domain-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--copper-bg) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.domain-card:hover {
+  border-color: var(--copper-bd);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(196,88,26,0.1), 0 2px 8px rgba(0,0,0,0.06);
+}
+.domain-card:hover::before { opacity: 1; }
+
+.domain-icon {
+  font-size: 28px;
+  margin-bottom: 14px;
+  position: relative;
+}
+.domain-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+  position: relative;
+}
+.domain-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  position: relative;
+}
+.dchip {
+  font-size: 0.73rem;
+  font-weight: 400;
+  color: var(--ink-mid);
+  background: var(--white);
+  border: 1px solid var(--rule);
+  padding: 3px 10px;
+  border-radius: 20px;
+  transition: all 0.15s;
+}
+.dchip.key {
+  background: var(--ink);
+  color: white;
+  border-color: var(--ink);
+  font-weight: 500;
+}
+.dchip.accent {
+  background: var(--copper-bg);
+  color: var(--copper);
+  border-color: var(--copper-bd);
+}
+.domain-card:hover .dchip:not(.key):not(.accent) {
+  background: white;
+}
+
+/* ─────────────────────────────────────────
+   CERTIFICATIONS
+───────────────────────────────────────── */
+#certs {
+  background: var(--ink) !important;
+}
+#certs .section-label { color: var(--copper-lt); }
+#certs .section-label::before { background: var(--copper-lt); }
+#certs .section-title { color: white; }
+#certs .section-title em { color: rgba(255,255,255,0.3); }
+
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.cert-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 20px 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: all 0.25s;
+  cursor: default;
+}
+.cert-card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(196,88,26,0.4);
+  transform: translateY(-2px);
+}
+.cert-card-ico {
+  width: 38px; height: 38px;
+  background: rgba(196,88,26,0.15);
+  border: 1px solid rgba(196,88,26,0.25);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.cert-card-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+.cert-card-valid {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: #3dba7a;
+}
+
+/* ─────────────────────────────────────────
+   EDUCATION
+───────────────────────────────────────── */
+#education .edu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.edu-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 30px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s;
+  cursor: default;
+}
+.edu-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--copper), var(--copper-lt));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.edu-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+  transform: translateY(-2px);
+}
+.edu-card:hover::after { transform: scaleX(1); }
+
+.edu-card-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 10px;
+}
+.edu-card-degree {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.edu-card-school {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+.edu-card-year {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+
+/* ─────────────────────────────────────────
+   CONTACT CTA
+───────────────────────────────────────── */
+#contact {
+  background: var(--paper) !important;
+  text-align: center;
+}
+#contact .section-label { justify-content: center; }
+#contact .section-label::before { display: none; }
+#contact .section-title { margin-bottom: 20px; }
+
+.contact-subtitle {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--ink-soft);
+  max-width: 500px;
+  margin: 0 auto 48px;
+  line-height: 1.8;
+}
+
+.contact-methods {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.cm-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  transition: all 0.25s;
+  min-width: 200px;
+}
+.cm-card:hover {
+  border-color: var(--copper-bd);
+  box-shadow: 0 4px 20px rgba(196,88,26,0.1);
+  transform: translateY(-2px);
+}
+.cm-icon {
+  width: 36px; height: 36px;
+  background: var(--copper-bg);
+  border: 1px solid var(--copper-bd);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.cm-info strong {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1px;
+}
+.cm-info span {
+  font-size: 0.82rem;
+  color: var(--ink-mid);
+  font-weight: 400;
+}
+
+.open-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.open-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #2a9b5e;
+  animation: pulse 2.5s ease infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(42,155,94,0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(42,155,94,0); }
+}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+footer {
+  background: var(--ink);
+  padding: 28px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.02em;
+}
+.footer-brand em { font-style: italic; font-weight: 300; color: var(--copper-lt); }
+.footer-note {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.2);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ─────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────── */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 1024px) {
+  section { padding: 72px 48px; }
+  #hero { padding: 100px 48px 80px; }
+  .skills-domains { grid-template-columns: repeat(2, 1fr); }
+  .certs-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 860px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--nav-h);
+    left: 0; right: 0;
+    background: rgba(14,18,20,0.97);
+    padding: 24px;
+    gap: 16px;
+    backdrop-filter: blur(12px);
+  }
+  .hamburger { display: flex; }
+  #hero { padding: 100px 32px 80px; }
+  section { padding: 64px 32px; }
+  .hero-stats { display: none; }
+  .scroll-hint { display: none; }
+  #about .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  #experience .xp-grid { grid-template-columns: 1fr; }
+  .xp-nav { position: static; flex-direction: row; flex-wrap: wrap; }
+  .xp-nav-item { flex: 1 1 48%; }
+  .skills-domains { grid-template-columns: 1fr 1fr; }
+  .certs-grid { grid-template-columns: 1fr 1fr; }
+  #education .edu-grid { grid-template-columns: 1fr; }
+  footer { padding: 24px 32px; }
+}
+
+@media (max-width: 580px) {
+  #hero { padding: 90px 24px 60px; }
+  section { padding: 56px 24px; }
+  .hero-name { font-size: 3.4rem; }
+  .skills-domains { grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: 1fr; }
+  .contact-methods { flex-direction: column; align-items: center; }
+  .cm-card { width: 100%; max-width: 320px; }
+  .xp-nav { flex-direction: column; }
+  .xp-nav-item { flex: none; }
+  footer { padding: 20px 24px; flex-direction: column; text-align: center; }
+}
+
+@media print {
+  nav, .scroll-hint, .hero-orb, .hero-grid, .btn-primary, .btn-ghost { display: none !important; }
+  #hero { min-height: auto; padding: 48px 40px; }
+  .hero-stats { position: static; display: grid; }
+  section { padding: 40px; }
+  * { animation: none !important; opacity: 1 !important; transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="mainNav">
+  <a href="#hero" class="nav-logo"><em>Alexander</em> Wilson</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certs">Certifications</a></li>
+    <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb orb-1"></div>
+  <div class="hero-orb orb-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-line"></span>
+      Manufacturing IT &amp; Controls Leadership
+    </div>
+    <h1 class="hero-name">
+      <span class="first">Alexander</span>
+      Wil<span class="last-accent">son</span>
+    </h1>
+    <p class="hero-tagline">
+      Technology executive who turns <strong>plant floors into intelligent systems.</strong> Nearly a decade architecting IT/OT convergence — Ignition SCADA, MES, ERP, Zero Trust security, and industrial AI — across high-volume manufacturing environments.
+    </p>
+    <div class="hero-actions">
+      <a href="#experience" class="btn-primary">View My Work ↓</a>
+      <a href="mailto:adwilson254@gmail.com" class="btn-ghost">adwilson254@gmail.com</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hs-cell">
+      <div class="hs-num">9+</div>
+      <div class="hs-label">Years IT / OT</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-num">3</div>
+      <div class="hs-label">Degrees Earned</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-num">10+</div>
+      <div class="hs-label">Active Certifications</div>
+    </div>
+    <div class="hs-cell">
+      <div class="hs-num">4</div>
+      <div class="hs-label">Industries Served</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="section-label reveal">About</div>
+  <h2 class="section-title reveal reveal-delay-1">A rare bridge between<br><em>the plant floor and the boardroom.</em></h2>
+
+  <div class="about-grid">
+    <div class="about-text reveal reveal-delay-2">
+      <p>
+        I started my career with a soldering iron and a PLC manual. Today I architect the systems that run factories — from <strong>Ignition SCADA gateways</strong> that talk to every machine on the floor to the <strong>Azure cloud pipelines</strong> that surface that data as real-time intelligence for executive teams.
+      </p>
+      <p>
+        At Amplify Cell Technologies, I lead IT/OT strategy for a next-generation battery manufacturing facility — managing vendors, driving <strong>Industry 4.0 deployments</strong>, securing the entire operational technology stack, and building AI-powered tools that give engineers instant access to knowledge that used to take hours to find.
+      </p>
+      <p>
+        I hold dual Bachelor's degrees and a Master's in Cybersecurity, plus a full stack of active CompTIA, ISC², and ITIL certifications. I'm the person organizations hire when they need someone who can own the whole picture — and deliver it.
+      </p>
+    </div>
+
+    <div class="about-credentials reveal reveal-delay-3">
+      <div class="cred-item">
+        <div class="cred-icon">🔧</div>
+        <div class="cred-info">
+          <div class="cred-title">Ignition SCADA Expert</div>
+          <div class="cred-sub">Gateway design, historian, real-time dashboards, IIoT integration</div>
+        </div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">🏭</div>
+        <div class="cred-info">
+          <div class="cred-title">Manufacturing Systems Architect</div>
+          <div class="cred-sub">Siemens MES/MOM · SAP ERP · Industry 4.0 · MQTT/API standards</div>
+        </div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">🔐</div>
+        <div class="cred-info">
+          <div class="cred-title">OT Cybersecurity Lead</div>
+          <div class="cred-sub">Zero Trust (Zscaler) · IT/OT convergence security · Incident response</div>
+        </div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">☁️</div>
+        <div class="cred-info">
+          <div class="cred-title">Cloud & DevOps Engineer</div>
+          <div class="cred-sub">Azure · Terraform · Docker · CI/CD · Linux/Windows Server</div>
+        </div>
+      </div>
+      <div class="cred-item">
+        <div class="cred-icon">🤖</div>
+        <div class="cred-info">
+          <div class="cred-title">Industrial AI Implementer</div>
+          <div class="cred-sub">RAG systems · Python automation · Predictive maintenance</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EXPERIENCE ══ -->
+<section id="experience">
+  <div class="section-label reveal">Experience</div>
+  <h2 class="section-title reveal reveal-delay-1">Where I've <em>made an impact.</em></h2>
+
+  <div class="xp-grid reveal reveal-delay-2">
+
+    <!-- Tab nav -->
+    <div class="xp-nav">
+      <div class="xp-nav-item active" onclick="showJob(0, this)">
+        <div class="xp-nav-company">Amplify Cell Tech</div>
+        <div class="xp-nav-period">2024 — Present</div>
+      </div>
+      <div class="xp-nav-item" onclick="showJob(1, this)">
+        <div class="xp-nav-company">DENSO</div>
+        <div class="xp-nav-period">2020 — 2024</div>
+      </div>
+      <div class="xp-nav-item" onclick="showJob(2, this)">
+        <div class="xp-nav-company">Phifer Wire Products</div>
+        <div class="xp-nav-period">2017 — 2019</div>
+      </div>
+      <div class="xp-nav-item" onclick="showJob(3, this)">
+        <div class="xp-nav-company">Eastman Chemical</div>
+        <div class="xp-nav-period">2018 (Internship)</div>
+      </div>
+    </div>
+
+    <!-- Panels -->
+    <div class="xp-panels">
+
+      <div class="xp-panel active" id="job-0">
+        <div class="xp-panel-role">IT Manufacturing Systems Lead</div>
+        <div class="xp-panel-meta">
+          <span class="xp-panel-co">Amplify Cell Technologies · Byhalia, MS</span>
+          <span class="sep-dot"></span>
+          <span class="xp-panel-badge">APR 2024 — PRESENT</span>
+        </div>
+        <ul class="xp-panel-points">
+          <li><span><b>Owned full-lifecycle deployment</b> of MOM/MES (Siemens), SCADA (Ignition), and SAP ERP systems aligned with Industry 4.0 — managing vendor contracts, SOWs, and contractor teams from RFP through production go-live.</span></li>
+          <li><span><b>Directed IT/OT convergence strategy</b> across the full operational stack, establishing governance policies, change management workflows, and cybersecurity baselines using Zscaler Zero Trust (ZIA/ZPA).</span></li>
+          <li><span><b>Led hybrid cloud infrastructure</b> across Azure, Proxmox, Docker, and on-prem Linux/Windows Server — deploying Infrastructure-as-Code (Terraform) and CI/CD pipelines that materially improved deployment velocity.</span></li>
+          <li><span><b>Built industrial AI systems</b> — designing and deploying RAG platforms that give operations teams instant, reliable access to complex technical documentation and historical data.</span></li>
+          <li><span>Defined and enforced <b>machine communication standards</b> via MQTT and REST APIs, creating a unified real-time telemetry layer across all production assets.</span></li>
+        </ul>
+        <div class="xp-panel-tags">
+          <span class="xp-tag">Ignition SCADA</span><span class="xp-tag">Siemens MES</span><span class="xp-tag">SAP ERP</span><span class="xp-tag">Azure</span><span class="xp-tag">Terraform</span><span class="xp-tag">Zscaler ZIA/ZPA</span><span class="xp-tag">RAG / AI</span><span class="xp-tag">MQTT</span><span class="xp-tag">Docker</span><span class="xp-tag">Vendor Management</span>
+        </div>
+      </div>
+
+      <div class="xp-panel" id="job-1">
+        <div class="xp-panel-role">Senior IoT / Controls Engineer</div>
+        <div class="xp-panel-meta">
+          <span class="xp-panel-co">DENSO · Maryville, TN</span>
+          <span class="sep-dot"></span>
+          <span class="xp-panel-badge">FEB 2020 — APR 2024</span>
+        </div>
+        <ul class="xp-panel-points">
+          <li><span><b>Architected and deployed a universal Ignition SCADA gateway</b> connecting heterogeneous factory machines to a centralised platform — delivering real-time visualisation, historian logging, and alarm management across the entire facility.</span></li>
+          <li><span><b>Led Python-driven automation and DevOps programs</b> that dramatically accelerated machine data pipeline deployment and reduced engineering overhead for new equipment onboarding.</span></li>
+          <li><span>Drove <b>predictive maintenance programs</b> through statistical process monitoring and ML-assisted anomaly detection, directly improving OEE and reducing unplanned downtime.</span></li>
+          <li><span>Partnered with operations leadership to define <b>enterprise data governance standards and KPI dashboards</b> adopted across production management and quality engineering teams.</span></li>
+        </ul>
+        <div class="xp-panel-tags">
+          <span class="xp-tag">Ignition SCADA</span><span class="xp-tag">Python</span><span class="xp-tag">DevOps</span><span class="xp-tag">IIoT</span><span class="xp-tag">Predictive Maintenance</span><span class="xp-tag">OEE</span><span class="xp-tag">Data Pipelines</span><span class="xp-tag">KPI Dashboards</span>
+        </div>
+      </div>
+
+      <div class="xp-panel" id="job-2">
+        <div class="xp-panel-role">Process Controls Engineer</div>
+        <div class="xp-panel-meta">
+          <span class="xp-panel-co">Phifer Wire Products · Tuscaloosa, AL</span>
+          <span class="sep-dot"></span>
+          <span class="xp-panel-badge">DEC 2017 — FEB 2019</span>
+        </div>
+        <ul class="xp-panel-points">
+          <li><span><b>Created and led a structured controls training programme</b> for the entire team on ABB robotic manufacturing systems — covering programming, safe operation, and advanced field troubleshooting.</span></li>
+          <li><span>Installed, maintained, and programmed <b>PLCs across automated manufacturing lines</b>, maintaining system reliability and minimising production downtime.</span></li>
+        </ul>
+        <div class="xp-panel-tags">
+          <span class="xp-tag">PLC Programming</span><span class="xp-tag">ABB Robotics</span><span class="xp-tag">Team Training</span><span class="xp-tag">Controls Engineering</span>
+        </div>
+      </div>
+
+      <div class="xp-panel" id="job-3">
+        <div class="xp-panel-role">Electrical Engineering Intern</div>
+        <div class="xp-panel-meta">
+          <span class="xp-panel-co">Eastman Chemical · Kingsport, TN</span>
+          <span class="sep-dot"></span>
+          <span class="xp-panel-badge">MAY — AUG 2018</span>
+        </div>
+        <ul class="xp-panel-points">
+          <li><span>Supported Plant Engineering through <b>job estimation, P&amp;ID revision, instrument specification</b>, electrical drawings, and multidisciplinary project coordination across a large-scale chemical facility.</span></li>
+        </ul>
+        <div class="xp-panel-tags">
+          <span class="xp-tag">P&ID Design</span><span class="xp-tag">Electrical Engineering</span><span class="xp-tag">Instrument Spec</span><span class="xp-tag">Plant Engineering</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ SKILLS ══ -->
+<section id="skills">
+  <div class="section-label reveal">Skills</div>
+  <h2 class="section-title reveal reveal-delay-1">A full-stack toolkit,<br><em>built over a decade.</em></h2>
+  <p class="skills-intro reveal reveal-delay-2">From programming a PLC at 3am to architecting a Zero Trust security framework — I've done it all. Here's where my depth lives.</p>
+
+  <div class="skills-domains">
+    <div class="domain-card reveal reveal-delay-1">
+      <div class="domain-icon">⚙️</div>
+      <div class="domain-name">SCADA &amp; Controls</div>
+      <div class="domain-chips">
+        <span class="dchip key">Ignition SCADA</span>
+        <span class="dchip key">PLC Programming</span>
+        <span class="dchip">HMI Development</span>
+        <span class="dchip">OPC-UA</span>
+        <span class="dchip">ABB Robotics</span>
+        <span class="dchip accent">MQTT</span>
+      </div>
+    </div>
+    <div class="domain-card reveal reveal-delay-2">
+      <div class="domain-icon">🏭</div>
+      <div class="domain-name">Manufacturing Systems</div>
+      <div class="domain-chips">
+        <span class="dchip key">Siemens MES / MOM</span>
+        <span class="dchip key">SAP ERP</span>
+        <span class="dchip">Industry 4.0</span>
+        <span class="dchip">IIoT Architecture</span>
+        <span class="dchip accent">OEE Optimisation</span>
+        <span class="dchip">Predictive Maint.</span>
+      </div>
+    </div>
+    <div class="domain-card reveal reveal-delay-3">
+      <div class="domain-icon">🔐</div>
+      <div class="domain-name">Cybersecurity &amp; Governance</div>
+      <div class="domain-chips">
+        <span class="dchip key">IT / OT Security</span>
+        <span class="dchip">Zscaler ZIA / ZPA</span>
+        <span class="dchip">Zero Trust</span>
+        <span class="dchip">IDS / IPS</span>
+        <span class="dchip">Incident Response</span>
+        <span class="dchip accent">ITIL</span>
+      </div>
+    </div>
+    <div class="domain-card reveal reveal-delay-1">
+      <div class="domain-icon">☁️</div>
+      <div class="domain-name">Cloud &amp; Infrastructure</div>
+      <div class="domain-chips">
+        <span class="dchip key">Microsoft Azure</span>
+        <span class="dchip">AWS</span>
+        <span class="dchip">Terraform</span>
+        <span class="dchip">Docker</span>
+        <span class="dchip">Linux / Windows Server</span>
+        <span class="dchip accent">CI / CD</span>
+      </div>
+    </div>
+    <div class="domain-card reveal reveal-delay-2">
+      <div class="domain-icon">🤝</div>
+      <div class="domain-name">Leadership &amp; Management</div>
+      <div class="domain-chips">
+        <span class="dchip key">Team Leadership</span>
+        <span class="dchip key">Vendor Management</span>
+        <span class="dchip">RFP / Contract Mgmt</span>
+        <span class="dchip">Agile / Scrum</span>
+        <span class="dchip accent">Change Management</span>
+        <span class="dchip">ServiceNow</span>
+      </div>
+    </div>
+    <div class="domain-card reveal reveal-delay-3">
+      <div class="domain-icon">🤖</div>
+      <div class="domain-name">AI &amp; Development</div>
+      <div class="domain-chips">
+        <span class="dchip key">Generative AI / RAG</span>
+        <span class="dchip key">Python</span>
+        <span class="dchip">REST APIs</span>
+        <span class="dchip">SQL</span>
+        <span class="dchip">C / C++</span>
+        <span class="dchip accent">Microservices</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CERTS ══ -->
+<section id="certs">
+  <div class="section-label reveal">Certifications</div>
+  <h2 class="section-title reveal reveal-delay-1">Credentials that <em>back it up.</em></h2>
+
+  <div class="certs-grid">
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-card-ico">🛡️</div>
+      <div><div class="cert-card-name">CompTIA Security+</div><div class="cert-card-valid">✓ Active · Aug 2029</div></div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-card-ico">🔍</div>
+      <div><div class="cert-card-name">CompTIA CySA+</div><div class="cert-card-valid">✓ Active · Aug 2029</div></div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div class="cert-card-ico">⚔️</div>
+      <div><div class="cert-card-name">CompTIA PenTest+</div><div class="cert-card-valid">✓ Active · Aug 2029</div></div>
+    </div>
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-card-ico">🌐</div>
+      <div><div class="cert-card-name">CompTIA Network+</div><div class="cert-card-valid">✓ Active · Aug 2029</div></div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-card-ico">🖥️</div>
+      <div><div class="cert-card-name">CompTIA A+</div><div class="cert-card-valid">✓ Active</div></div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div class="cert-card-ico">🔒</div>
+      <div><div class="cert-card-name">SSCP — ISC²</div><div class="cert-card-valid">✓ Active · Sep 2026</div></div>
+    </div>
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-card-ico">⚙️</div>
+      <div><div class="cert-card-name">ITIL Foundation</div><div class="cert-card-valid">✓ Active · Apr 2026</div></div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-card-ico">🐧</div>
+      <div><div class="cert-card-name">LPI Linux Essentials</div><div class="cert-card-valid">✓ Active</div></div>
+    </div>
+    <div class="cert-card reveal reveal-delay-3">
+      <div class="cert-card-ico">🎓</div>
+      <div><div class="cert-card-name">Google Cybersecurity</div><div class="cert-card-valid">✓ Active</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EDUCATION ══ -->
+<section id="education">
+  <div class="section-label reveal">Education</div>
+  <h2 class="section-title reveal reveal-delay-1">Built on a <em>strong foundation.</em></h2>
+
+  <div class="edu-grid">
+    <div class="edu-card reveal reveal-delay-1">
+      <div class="edu-card-type">Master's Degree</div>
+      <div class="edu-card-degree">Cybersecurity &amp; Information Assurance</div>
+      <div class="edu-card-school">Western Governors University</div>
+      <div class="edu-card-year">Graduated Feb 2024</div>
+    </div>
+    <div class="edu-card reveal reveal-delay-2">
+      <div class="edu-card-type">Bachelor's Degree</div>
+      <div class="edu-card-degree">Cybersecurity &amp; Information Assurance</div>
+      <div class="edu-card-school">Western Governors University</div>
+      <div class="edu-card-year">Graduated Sep 2023</div>
+    </div>
+    <div class="edu-card reveal reveal-delay-3">
+      <div class="edu-card-type">Bachelor's Degree</div>
+      <div class="edu-card-degree">Electrical &amp; Computer Engineering</div>
+      <div class="edu-card-school">The University of Alabama</div>
+      <div class="edu-card-year">Graduated May 2019</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="section-label reveal">Contact</div>
+  <h2 class="section-title reveal reveal-delay-1">Let's build something<br><em>remarkable together.</em></h2>
+  <p class="contact-subtitle reveal reveal-delay-2">Open to management roles in IT, Controls, or Manufacturing Systems. Based in Tennessee — willing to relocate anywhere.</p>
+
+  <div class="contact-methods reveal reveal-delay-3">
+    <a class="cm-card" href="mailto:adwilson254@gmail.com">
+      <div class="cm-icon">✉</div>
+      <div class="cm-info"><strong>Email</strong><span>adwilson254@gmail.com</span></div>
+    </a>
+    <a class="cm-card" href="tel:+17316094496">
+      <div class="cm-icon">☎</div>
+      <div class="cm-info"><strong>Phone</strong><span>+1 (731) 609-4496</span></div>
+    </a>
+    <a class="cm-card" href="https://www.linkedin.com/in/alexander-wilson-30a198104" target="_blank">
+      <div class="cm-icon">in</div>
+      <div class="cm-info"><strong>LinkedIn</strong><span>alexander-wilson-30a198104</span></div>
+    </a>
+  </div>
+
+  <div class="open-badge reveal reveal-delay-4">
+    <span class="open-dot"></span>
+    Open to new opportunities
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-brand"><em>Alexander</em> Wilson</div>
+  <div class="footer-note">Whiteville, TN · US Work Authorized · No Sponsorship Required</div>
+</footer>
+
+<!-- ══ JS ══ -->
+<script>
+// ── Nav scroll effect ──
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── Hamburger ──
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+// Close nav on link click
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Job tabs ──
+function showJob(index, clicked) {
+  // Deactivate all
+  document.querySelectorAll('.xp-nav-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.xp-panel').forEach(el => el.classList.remove('active'));
+  // Activate selected
+  clicked.classList.add('active');
+  document.getElementById('job-' + index).classList.add('active');
+}
+</script>
+
+</body>
+</html>
